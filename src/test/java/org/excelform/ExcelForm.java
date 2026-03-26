@@ -11,6 +11,7 @@ import java.io.*;
 
 public class ExcelForm {
     public static void main(String[] args) throws Exception {
+    	String FormUrl = "https://selenium-autofill.vercel.app/";
         String filePath = "C:\\Users\\HAI\\eclipse-workspace\\Excel\\target\\ExcelForm.xlsx";
         FileInputStream fileinput = new FileInputStream(filePath);
         Workbook workbook = new XSSFWorkbook(fileinput);
@@ -18,7 +19,7 @@ public class ExcelForm {
         WebDriverManager.chromedriver().setup();
         WebDriver driver = new ChromeDriver();
         driver.manage().window().maximize();
-        driver.get("https://selenium-autofill.vercel.app/");
+        driver.get(FormUrl);
             driver.findElement(By.id("clearAllBtn")).click();
             Alert alert = driver.switchTo().alert();
             alert.accept();
@@ -29,13 +30,13 @@ public class ExcelForm {
             String expLevel = row.getCell(1).toString();
             String workType = row.getCell(2).toString();
             String agree    = row.getCell(3).toString();
-            	Thread.sleep(1000);
+            	Thread.sleep(200);
                 driver.findElement(By.id("fullName")).clear();
                 driver.findElement(By.id("fullName")).sendKeys(fullName);
-                Thread.sleep(1000);
+                Thread.sleep(200);
                 Select select = new Select(driver.findElement(By.id("experience")));
                 select.selectByValue(expLevel);
-                Thread.sleep(1000);
+                Thread.sleep(200);
                 if (workType != null) {
                     if (workType.equalsIgnoreCase("Remote")) {
                         driver.findElement(By.id("radioRemote")).click();
@@ -43,15 +44,14 @@ public class ExcelForm {
                         driver.findElement(By.id("radioOnsite")).click();
                     }
                 }
-                Thread.sleep(1000);
+                Thread.sleep(200);
                 WebElement terms = driver.findElement(By.id("termsCheckbox"));
                 if (agree.equalsIgnoreCase("Yes") && !terms.isSelected()) {
                     terms.click();
                 }
-                Thread.sleep(1000);
+                Thread.sleep(200);
                 driver.findElement(By.id("submitBtn")).click();
-                Thread.sleep(1000);
-                Thread.sleep(1000);
+                Thread.sleep(200);
                 if (row.getCell(4) == null) row.createCell(4);
                 if (row.getCell(5) == null) row.createCell(5);
                 try {
@@ -65,7 +65,7 @@ public class ExcelForm {
                     row.getCell(4).setCellValue("PASS");
                     row.getCell(5).setCellValue("Form submitted successfully");
                 }
-            Thread.sleep(1000);
+            Thread.sleep(200);
             driver.navigate().refresh();
             }
         FileOutputStream fileoutput = new FileOutputStream(filePath);
